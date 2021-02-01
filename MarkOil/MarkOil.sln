@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkOil", "MarkOil.csproj", "{3BE26477-BE0B-45B7-AD35-86F29C2C7EBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BE26477-BE0B-45B7-AD35-86F29C2C7EBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BE26477-BE0B-45B7-AD35-86F29C2C7EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BE26477-BE0B-45B7-AD35-86F29C2C7EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BE26477-BE0B-45B7-AD35-86F29C2C7EBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9360EE6C-4EF0-4C2C-8BEB-A6C71F7CA6F8}
+	EndGlobalSection
+EndGlobal
