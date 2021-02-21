@@ -52,8 +52,11 @@
             this.toolStripButton20 = new System.Windows.Forms.ToolStripButton();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Property = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -277,6 +280,7 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(455, 273);
             this.treeView1.TabIndex = 5;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // progressBar1
             // 
@@ -285,15 +289,31 @@
             this.progressBar1.Size = new System.Drawing.Size(297, 22);
             this.progressBar1.TabIndex = 6;
             // 
-            // listView1
+            // dataGridView1
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(486, 28);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(296, 201);
-            this.listView1.TabIndex = 7;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Property,
+            this.Value});
+            this.dataGridView1.Location = new System.Drawing.Point(486, 28);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(297, 226);
+            this.dataGridView1.TabIndex = 7;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // Property
+            // 
+            this.Property.HeaderText = "Свойство";
+            this.Property.Name = "Property";
+            this.Property.ReadOnly = true;
+            this.Property.Width = 135;
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Value";
+            this.Value.Name = "Value";
+            this.Value.ReadOnly = true;
+            this.Value.Width = 120;
             // 
             // Form1
             // 
@@ -301,7 +321,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(822, 342);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.toolStrip1);
@@ -310,6 +330,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -339,7 +360,9 @@
         private System.Windows.Forms.ToolStripButton toolStripButton20;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Property;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
     }
 }
 
