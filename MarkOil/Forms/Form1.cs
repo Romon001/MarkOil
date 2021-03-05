@@ -67,7 +67,6 @@ namespace MarkOil
             {
                 dataGridView1.Rows.Add(a.Property,a.Value);
             }
-            //_context.CUT_PROP
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
@@ -101,6 +100,12 @@ namespace MarkOil
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void toolStripButton20_Click(object sender, EventArgs e)
+        {
+            TEST newForm = new TEST();
+            newForm.Show();
         }
     }
 }

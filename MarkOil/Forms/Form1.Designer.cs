@@ -273,6 +273,7 @@
             this.toolStripButton20.Name = "toolStripButton20";
             this.toolStripButton20.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton20.Text = "toolStripButton20";
+            this.toolStripButton20.Click += new System.EventHandler(this.toolStripButton20_Click);
             // 
             // treeView1
             // 
@@ -326,7 +327,7 @@
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Дерево нефтей";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

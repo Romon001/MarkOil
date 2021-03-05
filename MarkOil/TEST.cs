@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace MarkOil
 {
-    public partial class Form3 : Form
+    public partial class TEST : Form
     {
-        public Form3()
+        public TEST()
         {
             InitializeComponent();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }
