@@ -53,7 +53,7 @@ namespace MarkOil
             dataGridView2.Rows.Add("460", "36");
             dataGridView2.Rows.Add("470", "40");
             dataGridView2.Rows.Add("480", "44");
-            dataGridView2.Rows.Add("690", "46");
+            dataGridView2.Rows.Add("490", "46");
             dataGridView2.Rows.Add("500", "48");
             dataGridView2.Rows.Add("510", "50");
             dataGridView2.Rows.Add("520", "52");

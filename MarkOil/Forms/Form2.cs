@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
-
+using Microsoft.SolverFoundation.Common;
+using Microsoft.SolverFoundation.Solvers;
+using Microsoft.SolverFoundation.Services;
 
 namespace MarkOil
 {
@@ -106,18 +108,18 @@ namespace MarkOil
             ceofSpg /= coefSum;
             coefCst /= coefSum;
 
-            //var answer = MessageBox.Show("Отобрать с одинаковым индексом?",
-            //                             "Сообщение",
-            //                             MessageBoxButtons.YesNo,
-            //                             MessageBoxIcon.Information,
-            //                             MessageBoxDefaultButton.Button1,
-            //                             MessageBoxOptions.DefaultDesktopOnly);
+            var answer = MessageBox.Show("Решить с помощью линейного программирования?",
+                                         "Сообщение",
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Information,
+                                         MessageBoxDefaultButton.Button1,
+                                         MessageBoxOptions.DefaultDesktopOnly);
             
             CreateClosenessSelectionTable();
 
             DataTable propertiesTable = GetFullPropertiesTable();
-            //dataGridView1.DataSource = propertiesTable;
-            //dataGridView1.Refresh();
+            
+            
             int numberOfAnalogs = Convert.ToInt32(textBox16.Text);
             List<DataRow> analogs = new List<DataRow>(numberOfAnalogs);
             List<double> analogsDistance = new List<double>(numberOfAnalogs);
@@ -132,15 +134,11 @@ namespace MarkOil
             foreach (DataRow b in propertiesTable.Rows)
             {
                 count++;
-                b["Расстояние"] = Math.Sqrt(coefSul * (sul - Convert.ToDouble(b["Сера"])) * (sul - Convert.ToDouble(b["Сера"]))/ sul/ sul +
-                                            coef350 * (_350 - Convert.ToDouble(b["V350"])) * (_350 - Convert.ToDouble(b["V350"]))/ _350/ _350 +
-                                            coefPar * (par - Convert.ToDouble(b["Парафины"])) * (par - Convert.ToDouble(b["Парафины"]))/ coefPar/ coefPar +
-                                            ceofSpg * (spg - Convert.ToDouble(b["Плотность"])) * (spg - Convert.ToDouble(b["Плотность"]))/ ceofSpg/ ceofSpg +
-                                            coefCst * (cst - Convert.ToDouble(b["Вязкость"])) * (cst - Convert.ToDouble(b["Вязкость"]))/ coefCst/ coefCst);
-                
+                b["Расстояние"] = CalculateDistance(b);
+
                 double distance = Convert.ToDouble(b["Расстояние"]);
                 b["Рецепт"] = distance;
-                if (count <= 5)
+                if (count <= numberOfAnalogs)
                 {
                     analogs.Add(b);
                     analogsDistance.Add(distance);
@@ -168,37 +166,29 @@ namespace MarkOil
             closenessAnalogs.Columns.Add("Расстояние", System.Type.GetType("System.Double"));
             closenessAnalogs.Columns.Add("Рецепт", System.Type.GetType("System.Double"));
 
-            double reverseDistancesSum = 0;
-            DataRow finalAnalaog = closenessAnalogs.NewRow();
-            finalAnalaog["Название"] = "Смесь нефтей";
-            finalAnalaog["Сера"] = 0;
-            finalAnalaog["V350"] = 0;
-            finalAnalaog["Парафины"] = 0;
-            finalAnalaog["Плотность"] = 0;
-            finalAnalaog["Вязкость"] = 0;
-            finalAnalaog["Расстояние"] = 0;
-            finalAnalaog["Рецепт"] = 0;
+            
+            DataRow finalAnalog = closenessAnalogs.NewRow();
+            finalAnalog["Название"] = "Смесь нефтей";
+            finalAnalog["Сера"] = 0;
+            finalAnalog["V350"] = 0;
+            finalAnalog["Парафины"] = 0;
+            finalAnalog["Плотность"] = 0;
+            finalAnalog["Вязкость"] = 0;
+            finalAnalog["Расстояние"] = 0;
+            finalAnalog["Рецепт"] = 0;
 
-            foreach (var a in analogs)
+            //Рассчет рецепта
+            if (answer.ToString() == "Yes")
             {
-                reverseDistancesSum += 1 / Convert.ToDouble(a["Расстояние"]);
+                CalculateRecipeLP(analogs, finalAnalog, closenessAnalogs);
+            }
+            else
+            {
+                CalculateRecipe(analogs, finalAnalog, closenessAnalogs);
 
             }
-            foreach (var a in analogs)
-            {
-                a["Рецепт"] = (1 / Convert.ToDouble(a["Расстояние"]) / reverseDistancesSum);
-                finalAnalaog["Сера"] = Convert.ToDouble(finalAnalaog["Сера"]) + Convert.ToDouble(a["Рецепт"])* Convert.ToDouble(a["Сера"]);
-                finalAnalaog["V350"] = Convert.ToDouble(finalAnalaog["V350"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["V350"]);
-                finalAnalaog["Парафины"] = Convert.ToDouble(finalAnalaog["Парафины"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Парафины"]);
-                finalAnalaog["Плотность"] = Convert.ToDouble(finalAnalaog["Плотность"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Плотность"]);
-                finalAnalaog["Вязкость"] = Convert.ToDouble(finalAnalaog["Вязкость"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Вязкость"]);
-                finalAnalaog["Расстояние"] =0;
-                finalAnalaog["Рецепт"] = Convert.ToDouble(finalAnalaog["Рецепт"]) + Convert.ToDouble(a["Рецепт"]);
-
-                closenessAnalogs.ImportRow(a);
-                
-            }
-            closenessAnalogs.Rows.Add(finalAnalaog);
+            //Добавление конечной смеси в список
+            closenessAnalogs.Rows.Add(finalAnalog);
             closenessAnalogs.Rows.Add("Исходная нефть",sul,_350,par, spg, cst, "0,0000","1,000");
             dataGridView1.DataSource = closenessAnalogs;
             dataGridView1.Refresh();
@@ -268,7 +258,114 @@ namespace MarkOil
             fullPropertiesTable = propTable;
             return fullPropertiesTable;
         }
+        public void CalculateRecipe(List<DataRow> analogs, DataRow finalAnalog, DataTable closenessAnalogs)
+        {
+                        double reverseDistancesSum = 0;
+            foreach (var a in analogs)
+            {
+                reverseDistancesSum += 1 / Convert.ToDouble(a["Расстояние"]);
 
+            }
+            foreach (var a in analogs)
+            {
+                a["Рецепт"] = (1 / Convert.ToDouble(a["Расстояние"]) / reverseDistancesSum);
+                finalAnalog["Сера"] = Convert.ToDouble(finalAnalog["Сера"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Сера"]);
+                finalAnalog["V350"] = Convert.ToDouble(finalAnalog["V350"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["V350"]);
+                finalAnalog["Парафины"] = Convert.ToDouble(finalAnalog["Парафины"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Парафины"]);
+                finalAnalog["Плотность"] = Convert.ToDouble(finalAnalog["Плотность"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Плотность"]);
+                finalAnalog["Вязкость"] = Convert.ToDouble(finalAnalog["Вязкость"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Вязкость"]);
+                finalAnalog["Расстояние"] =CalculateDistance(finalAnalog);
+                finalAnalog["Рецепт"] = Convert.ToDouble(finalAnalog["Рецепт"]) + Convert.ToDouble(a["Рецепт"]);
+
+                closenessAnalogs.ImportRow(a);
+                
+            }
+        }
+        public void CalculateRecipeLP(List<DataRow> analogs, DataRow finalAnalog, DataTable closenessAnalogs)
+        {
+            var solver = SolverContext.GetContext();
+            solver.ClearModel();
+            var model = solver.CreateModel();
+            Term generalError = 0; //функция которую минимизируем 
+            Term errorSul = Convert.ToDouble(textBoxSUL.Text);
+            Term errorV350 = Convert.ToDouble(textBox350.Text);
+            Term errorPar = Convert.ToDouble(textBoxPAR.Text);
+            Term errorSPG = Convert.ToDouble(textBoxSPG.Text);
+            Term errorCST = Convert.ToDouble(textBoxCST.Text);
+            Term generalConstraint = 0;// сумма рецепта = 1
+            for (int i = 0; i < Convert.ToInt32(textBox16.Text); i++)
+            {
+                Decision alpha = new Decision(Domain.RealRange(0,1), $"alpha{i}") ;
+                model.AddDecision(alpha);
+                model.AddConstraint($"constraintAlpha{i}", 0 <= alpha <= 1);
+
+                errorSul -= alpha * Convert.ToDouble(analogs[i]["Сера"]);
+                errorV350 -= alpha * Convert.ToDouble(analogs[i]["V350"]);
+                errorPar -= alpha * Convert.ToDouble(analogs[i]["Парафины"]);
+                errorSPG -= alpha * Convert.ToDouble(analogs[i]["Плотность"]);
+                errorCST -= alpha * Convert.ToDouble(analogs[i]["Вязкость"]);
+                
+                generalConstraint += alpha;
+                
+            }
+
+            model.AddConstraint($"sumAlpha", generalConstraint==1);
+
+            generalError = Convert.ToDouble(textBox11.Text)*Model.Abs(errorSul) +
+                            Convert.ToDouble(textBox7.Text)*Model.Abs(errorV350) +
+                            Convert.ToDouble(textBox8.Text)*Model.Abs(errorPar) + 
+                            Convert.ToDouble(textBox9.Text)*Model.Abs(errorSPG) +
+                            Convert.ToDouble(textBox10.Text)*Model.Abs(errorCST);
+            model.AddGoal("ComplicatedGoal", GoalKind.Minimize, generalError);
+
+            var solution = solver.Solve();
+                
+            var solutions = solution.Decisions.ToList();
+            for (int i=0;i< solutions.Count();i++)
+            {
+                analogs[i]["Рецепт"] = solutions[i].ToDouble();
+                var a = solutions[i].ToDouble();
+            }
+            foreach (var a in analogs)
+            {
+                finalAnalog["Сера"] = Convert.ToDouble(finalAnalog["Сера"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Сера"]);
+                finalAnalog["V350"] = Convert.ToDouble(finalAnalog["V350"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["V350"]);
+                finalAnalog["Парафины"] = Convert.ToDouble(finalAnalog["Парафины"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Парафины"]);
+                finalAnalog["Плотность"] = Convert.ToDouble(finalAnalog["Плотность"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Плотность"]);
+                finalAnalog["Вязкость"] = Convert.ToDouble(finalAnalog["Вязкость"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Вязкость"]);
+                
+                finalAnalog["Рецепт"] = Convert.ToDouble(finalAnalog["Рецепт"]) + Convert.ToDouble(a["Рецепт"]);
+                finalAnalog["Расстояние"] = CalculateDistance(finalAnalog);
+
+                closenessAnalogs.ImportRow(a);
+
+            }
+
+        }
+        public double CalculateDistance(DataRow analog)
+        {
+            var sulfur = analog["Сера"];
+            var v350 = analog["V350"];
+            var parafin = analog["Парафины"];
+            var density = analog["Плотность"];
+            var viscosity = analog["Вязкость"];
+            var coefSul = Convert.ToDouble(textBox11.Text);
+            var coef350 = Convert.ToDouble(textBox7.Text);
+            var coefPar = Convert.ToDouble(textBox8.Text);
+            var ceofSpg = Convert.ToDouble(textBox9.Text);
+            var coefCst = Convert.ToDouble(textBox10.Text);
+            var sul = Convert.ToDouble(textBoxSUL.Text);
+            var _350 = Convert.ToDouble(textBox350.Text);
+            var par = Convert.ToDouble(textBoxPAR.Text);
+            var spg = Convert.ToDouble(textBoxSPG.Text);
+            var cst = Convert.ToDouble(textBoxCST.Text);
+            return Math.Sqrt(coefSul * (sul - Convert.ToDouble(sulfur)) * (sul - Convert.ToDouble(sulfur)) / sul / sul +
+                                        coef350 * (_350 - Convert.ToDouble(v350)) * (_350 - Convert.ToDouble(v350)) / _350 / _350 +
+                                        coefPar * (par - Convert.ToDouble(parafin)) * (par - Convert.ToDouble(parafin)) / coefPar / coefPar +
+                                        ceofSpg * (spg - Convert.ToDouble(density)) * (spg - Convert.ToDouble(density)) / ceofSpg / ceofSpg +
+                                        coefCst * (cst - Convert.ToDouble(viscosity)) * (cst - Convert.ToDouble(viscosity)) / coefCst / coefCst);
+
+        }
         public DataTable fullPropertiesTable { get; set;}
 
     }
