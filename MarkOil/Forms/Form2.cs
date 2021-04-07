@@ -194,13 +194,13 @@ namespace MarkOil
             dataGridView1.Refresh();
 
             dataGridView1.Columns[0].Width = 150;
-            dataGridView1.Columns[1].Width = 50;
-            dataGridView1.Columns[2].Width = 50;
+            dataGridView1.Columns[1].Width = 60;
+            dataGridView1.Columns[2].Width = 60;
             dataGridView1.Columns[3].Width = 80;
             dataGridView1.Columns[4].Width = 80;
             dataGridView1.Columns[5].Width = 70;
             dataGridView1.Columns[6].Width = 75;
-            dataGridView1.Columns[7].Width = 60;
+            dataGridView1.Columns[7].Width = 100;
 
             dataGridView1.Refresh();
 
@@ -276,6 +276,8 @@ namespace MarkOil
                 finalAnalog["Вязкость"] = Convert.ToDouble(finalAnalog["Вязкость"]) + Convert.ToDouble(a["Рецепт"]) * Convert.ToDouble(a["Вязкость"]);
                 finalAnalog["Расстояние"] =CalculateDistance(finalAnalog);
                 finalAnalog["Рецепт"] = Convert.ToDouble(finalAnalog["Рецепт"]) + Convert.ToDouble(a["Рецепт"]);
+                a["Рецепт"] = Math.Round(Convert.ToDouble(a["Рецепт"]), 4);
+                finalAnalog["Рецепт"] = Math.Round(Convert.ToDouble(finalAnalog["Рецепт"]), 4);
 
                 closenessAnalogs.ImportRow(a);
                 
@@ -324,7 +326,6 @@ namespace MarkOil
             for (int i=0;i< solutions.Count();i++)
             {
                 analogs[i]["Рецепт"] = solutions[i].ToDouble();
-                var a = solutions[i].ToDouble();
             }
             foreach (var a in analogs)
             {
@@ -336,6 +337,8 @@ namespace MarkOil
                 
                 finalAnalog["Рецепт"] = Convert.ToDouble(finalAnalog["Рецепт"]) + Convert.ToDouble(a["Рецепт"]);
                 finalAnalog["Расстояние"] = CalculateDistance(finalAnalog);
+                a["Рецепт"] = Math.Round(Convert.ToDouble(a["Рецепт"]),4);
+                finalAnalog["Рецепт"] = Math.Round(Convert.ToDouble(finalAnalog["Рецепт"]), 4);
 
                 closenessAnalogs.ImportRow(a);
 
@@ -368,5 +371,144 @@ namespace MarkOil
         }
         public DataTable fullPropertiesTable { get; set;}
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            var sul = Convert.ToDouble(textBoxSUL.Text);
+            var _350 = Convert.ToDouble(textBox350.Text);
+            var par = Convert.ToDouble(textBoxPAR.Text);
+            var spg = Convert.ToDouble(textBoxSPG.Text);
+            var cst = Convert.ToDouble(textBoxCST.Text);
+
+            label7.Text = "Нефти аналоги по близости";
+
+            var coefSul = Convert.ToDouble(textBox11.Text);
+            var coef350 = Convert.ToDouble(textBox7.Text);
+            var coefPar = Convert.ToDouble(textBox8.Text);
+            var ceofSpg = Convert.ToDouble(textBox9.Text);
+            var coefCst = Convert.ToDouble(textBox10.Text);
+
+            var coefSum = coefSul + coef350 + coefPar + ceofSpg + coefCst;
+            coefSul /= coefSum;
+            coef350 /= coefSum;
+            coefPar /= coefSum;
+            ceofSpg /= coefSum;
+            coefCst /= coefSum;
+
+            var answer = MessageBox.Show("Решить с помощью линейного программирования?",
+                                         "Сообщение",
+                                         MessageBoxButtons.YesNo,
+                                         MessageBoxIcon.Information,
+                                         MessageBoxDefaultButton.Button1,
+                                         MessageBoxOptions.DefaultDesktopOnly);
+
+            CreateClosenessSelectionTable();
+
+            DataTable propertiesTable = GetFullPropertiesTable();
+
+
+            int numberOfAnalogs = Convert.ToInt32(textBox16.Text);
+            List<DataRow> analogs = new List<DataRow>(numberOfAnalogs);
+            List<double> analogsDistance = new List<double>(numberOfAnalogs);
+            if (!propertiesTable.Columns.Contains("Расстояние"))
+            {
+                propertiesTable.Columns.Add("Расстояние", System.Type.GetType("System.Double"));
+                propertiesTable.Columns.Add("Рецепт", System.Type.GetType("System.Double"));
+
+            }
+            int count = 0;
+            int indexOfDistance;
+            foreach (DataRow b in propertiesTable.Rows)
+            {
+                count++;
+       
+                b["Расстояние"] = CalculateDistance(b);
+
+                double distance = Convert.ToDouble(b["Расстояние"]);
+                b["Рецепт"] = distance;
+                if (count <= numberOfAnalogs)
+                {
+                    analogs.Add(b);
+                    analogsDistance.Add(distance);
+                }
+                else
+                {
+                    if (distance < analogsDistance.Max())
+                    {
+                        indexOfDistance = analogsDistance.IndexOf(analogsDistance.Max());
+                        analogs[indexOfDistance] = b;
+                        analogsDistance[indexOfDistance] = distance;
+                    }
+                }
+
+
+            }
+
+
+            DataTable closenessAnalogs = new DataTable();
+            closenessAnalogs.Columns.Add("Название", System.Type.GetType("System.String"));
+            closenessAnalogs.Columns.Add("Сера", System.Type.GetType("System.Double"));
+            closenessAnalogs.Columns.Add("V350", System.Type.GetType("System.Double"));
+            closenessAnalogs.Columns.Add("Парафины", System.Type.GetType("System.Double"));
+            closenessAnalogs.Columns.Add("Плотность", System.Type.GetType("System.Double"));
+            closenessAnalogs.Columns.Add("Вязкость");
+            closenessAnalogs.Columns.Add("Расстояние", System.Type.GetType("System.Double"));
+            closenessAnalogs.Columns.Add("Рецепт", System.Type.GetType("System.Double"));
+            
+            foreach(var row in analogs)
+            {
+                row["Плотность"] = 1.0 / Convert.ToDouble(row["Плотность"]);
+            }
+
+            DataRow finalAnalog = closenessAnalogs.NewRow();
+            finalAnalog["Название"] = "Смесь нефтей";
+            finalAnalog["Сера"] = 0;
+            finalAnalog["V350"] = 0;
+            finalAnalog["Парафины"] = 0;
+            finalAnalog["Плотность"] = 0;
+            finalAnalog["Вязкость"] = 0;
+            finalAnalog["Расстояние"] = 0;
+            finalAnalog["Рецепт"] = 0;
+
+            //Рассчет рецепта
+            if (answer.ToString() == "Yes")
+            {
+                CalculateRecipeLP(analogs, finalAnalog, closenessAnalogs);
+            }
+            else
+            {
+                CalculateRecipe(analogs, finalAnalog, closenessAnalogs);
+
+            }
+            
+            foreach (var row in analogs)
+            {
+                row["Плотность"] = 1.0 / Convert.ToDouble(row["Плотность"]);
+            }
+
+            //Добавление конечной смеси в список
+            closenessAnalogs.Rows.Add(finalAnalog);
+
+            foreach (DataRow row in closenessAnalogs.Rows)
+            {
+                row["Плотность"] = 1.0 / Convert.ToDouble(row["Плотность"]);
+            }
+
+            closenessAnalogs.Rows.Add("Исходная нефть", sul, _350, par, spg, cst, "0,0000", "1,000");
+            dataGridView1.DataSource = closenessAnalogs;
+            dataGridView1.Refresh();
+
+
+            dataGridView1.Columns[0].Width = 150;
+            dataGridView1.Columns[1].Width = 60;
+            dataGridView1.Columns[2].Width = 60;
+            dataGridView1.Columns[3].Width = 80;
+            dataGridView1.Columns[4].Width = 80;
+            dataGridView1.Columns[5].Width = 70;
+            dataGridView1.Columns[6].Width = 75;
+            dataGridView1.Columns[7].Width = 100;
+
+            dataGridView1.Refresh();
+
+        }
     }
 }

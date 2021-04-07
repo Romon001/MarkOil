@@ -61,6 +61,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dbMarkDataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -262,7 +263,7 @@
             // 
             // indexSelectionButton
             // 
-            this.indexSelectionButton.Location = new System.Drawing.Point(655, 213);
+            this.indexSelectionButton.Location = new System.Drawing.Point(801, 213);
             this.indexSelectionButton.Name = "indexSelectionButton";
             this.indexSelectionButton.Size = new System.Drawing.Size(132, 41);
             this.indexSelectionButton.TabIndex = 33;
@@ -273,9 +274,9 @@
             // 
             // closenessSelectionButton
             // 
-            this.closenessSelectionButton.Location = new System.Drawing.Point(657, 269);
+            this.closenessSelectionButton.Location = new System.Drawing.Point(801, 269);
             this.closenessSelectionButton.Name = "closenessSelectionButton";
-            this.closenessSelectionButton.Size = new System.Drawing.Size(130, 37);
+            this.closenessSelectionButton.Size = new System.Drawing.Size(132, 37);
             this.closenessSelectionButton.TabIndex = 34;
             this.closenessSelectionButton.Text = "Подбор аналогов по близости";
             this.closenessSelectionButton.UseCompatibleTextRendering = true;
@@ -284,16 +285,16 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(655, 321);
+            this.button3.Location = new System.Drawing.Point(801, 379);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(132, 41);
+            this.button3.Size = new System.Drawing.Size(130, 41);
             this.button3.TabIndex = 35;
             this.button3.Text = "Рассчет рецептуры МЭ";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(657, 375);
+            this.button5.Location = new System.Drawing.Point(799, 438);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(132, 35);
             this.button5.TabIndex = 37;
@@ -306,9 +307,8 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(38, 194);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.Size = new System.Drawing.Size(0, 13);
             this.label7.TabIndex = 39;
-            this.label7.Text = "label7";
             // 
             // dbMarkDataSet1
             // 
@@ -325,7 +325,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(627, 198);
+            this.dataGridView1.Size = new System.Drawing.Size(749, 260);
             this.dataGridView1.TabIndex = 40;
             // 
             // Column1
@@ -365,11 +365,23 @@
             this.label10.TabIndex = 43;
             this.label10.Text = "Вес свойства";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(801, 323);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(130, 50);
+            this.button1.TabIndex = 44;
+            this.button1.Text = "Рассчет рецептуры с учетом объемной доли";
+            this.button1.UseCompatibleTextRendering = true;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 422);
+            this.ClientSize = new System.Drawing.Size(964, 509);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -445,5 +457,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button1;
     }
 }
