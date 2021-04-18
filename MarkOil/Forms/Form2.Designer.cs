@@ -51,8 +51,6 @@
             this.textBox16 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.indexSelectionButton = new System.Windows.Forms.Button();
-            this.closenessSelectionButton = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.dbMarkDataSet1 = new MarkOil.dbMarkDataSet();
@@ -72,9 +70,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(20, 31);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(256, 13);
+            this.label1.Size = new System.Drawing.Size(148, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Содержание серы,%вес.....................SUL";
+            this.label1.Text = "Содержание серы,%вес";
             // 
             // label2
             // 
@@ -82,9 +80,9 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.Location = new System.Drawing.Point(20, 57);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(256, 13);
+            this.label2.Size = new System.Drawing.Size(191, 13);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Отбор фракций до 350С, %вес ...........350";
+            this.label2.Text = "Отбор фракций до 350С, %вес ";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // textBoxSUL
@@ -218,9 +216,9 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.Location = new System.Drawing.Point(20, 83);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(136, 13);
+            this.label3.Size = new System.Drawing.Size(111, 13);
             this.label3.TabIndex = 27;
-            this.label3.Text = "Парафины, %вес PAR";
+            this.label3.Text = "Парафины, %вес ";
             // 
             // label4
             // 
@@ -228,9 +226,9 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.Location = new System.Drawing.Point(20, 109);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(236, 13);
+            this.label4.Size = new System.Drawing.Size(203, 13);
             this.label4.TabIndex = 28;
-            this.label4.Text = "Относительная плотность нефти, SPG";
+            this.label4.Text = "Относительная плотность нефти";
             // 
             // label5
             // 
@@ -238,9 +236,9 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(20, 135);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(276, 13);
+            this.label5.Size = new System.Drawing.Size(245, 13);
             this.label5.TabIndex = 29;
-            this.label5.Text = "Кинематическая вязкость при 20С, сст, CST";
+            this.label5.Text = "Кинематическая вязкость при 20С, сСт";
             // 
             // textBox16
             // 
@@ -272,29 +270,9 @@
             this.indexSelectionButton.UseVisualStyleBackColor = true;
             this.indexSelectionButton.Click += new System.EventHandler(this.button1_Click);
             // 
-            // closenessSelectionButton
-            // 
-            this.closenessSelectionButton.Location = new System.Drawing.Point(801, 269);
-            this.closenessSelectionButton.Name = "closenessSelectionButton";
-            this.closenessSelectionButton.Size = new System.Drawing.Size(132, 37);
-            this.closenessSelectionButton.TabIndex = 34;
-            this.closenessSelectionButton.Text = "Подбор аналогов по близости";
-            this.closenessSelectionButton.UseCompatibleTextRendering = true;
-            this.closenessSelectionButton.UseVisualStyleBackColor = true;
-            this.closenessSelectionButton.Click += new System.EventHandler(this.closenessSelectionButton_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(801, 379);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(130, 41);
-            this.button3.TabIndex = 35;
-            this.button3.Text = "Рассчет рецептуры МЭ";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(799, 438);
+            this.button5.Location = new System.Drawing.Point(801, 438);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(132, 35);
             this.button5.TabIndex = 37;
@@ -317,6 +295,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.ColumnHeadersVisible = false;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -325,7 +304,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(749, 260);
+            this.dataGridView1.Size = new System.Drawing.Size(750, 260);
             this.dataGridView1.TabIndex = 40;
             // 
             // Column1
@@ -367,11 +346,11 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(801, 323);
+            this.button1.Location = new System.Drawing.Point(801, 271);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(130, 50);
+            this.button1.Size = new System.Drawing.Size(130, 42);
             this.button1.TabIndex = 44;
-            this.button1.Text = "Рассчет рецептуры с учетом объемной доли";
+            this.button1.Text = "Расчет рецептуры по близости";
             this.button1.UseCompatibleTextRendering = true;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
@@ -388,8 +367,6 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.closenessSelectionButton);
             this.Controls.Add(this.indexSelectionButton);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox16);
@@ -447,8 +424,6 @@
         private System.Windows.Forms.TextBox textBox16;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button indexSelectionButton;
-        private System.Windows.Forms.Button closenessSelectionButton;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label7;
         private dbMarkDataSet dbMarkDataSet1;

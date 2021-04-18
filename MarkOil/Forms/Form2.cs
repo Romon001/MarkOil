@@ -85,6 +85,7 @@ namespace MarkOil
             return 10000*indexSul + 1000*index350 + 100*indexSPG + 10*indexCST + indexPAR ;
         }
 
+        //Функция от удаленной кнопки, прототип метода button1_Click_1
         private void closenessSelectionButton_Click(object sender, EventArgs e)
         {
             var sul = Convert.ToDouble(textBoxSUL.Text);
@@ -194,12 +195,12 @@ namespace MarkOil
             dataGridView1.Refresh();
 
             dataGridView1.Columns[0].Width = 150;
-            dataGridView1.Columns[1].Width = 60;
-            dataGridView1.Columns[2].Width = 60;
-            dataGridView1.Columns[3].Width = 80;
-            dataGridView1.Columns[4].Width = 80;
-            dataGridView1.Columns[5].Width = 70;
-            dataGridView1.Columns[6].Width = 75;
+            dataGridView1.Columns[1].Width = 100;
+            dataGridView1.Columns[2].Width = 100;
+            dataGridView1.Columns[3].Width = 100;
+            dataGridView1.Columns[4].Width = 100;
+            dataGridView1.Columns[5].Width = 100;
+            dataGridView1.Columns[6].Width = 100;
             dataGridView1.Columns[7].Width = 100;
 
             dataGridView1.Refresh();
@@ -499,13 +500,13 @@ namespace MarkOil
 
 
             dataGridView1.Columns[0].Width = 150;
-            dataGridView1.Columns[1].Width = 60;
-            dataGridView1.Columns[2].Width = 60;
+            dataGridView1.Columns[1].Width = 100;
+            dataGridView1.Columns[2].Width = 100;
             dataGridView1.Columns[3].Width = 80;
             dataGridView1.Columns[4].Width = 80;
-            dataGridView1.Columns[5].Width = 70;
-            dataGridView1.Columns[6].Width = 75;
-            dataGridView1.Columns[7].Width = 100;
+            dataGridView1.Columns[5].Width = 80;
+            dataGridView1.Columns[6].Width = 80;
+            dataGridView1.Columns[7].Width = 80;
 
             dataGridView1.Refresh();
 
