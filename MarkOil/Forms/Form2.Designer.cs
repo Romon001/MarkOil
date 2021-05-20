@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxSUL = new System.Windows.Forms.TextBox();
@@ -51,7 +52,6 @@
             this.textBox16 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.indexSelectionButton = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.dbMarkDataSet1 = new MarkOil.dbMarkDataSet();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -60,8 +60,16 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.calculateButton = new System.Windows.Forms.Button();
+            this.toggleSwitch1 = new DevExpress.XtraEditors.ToggleSwitch();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dbMarkDataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch1.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -270,16 +278,6 @@
             this.indexSelectionButton.UseVisualStyleBackColor = true;
             this.indexSelectionButton.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(801, 438);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(132, 35);
-            this.button5.TabIndex = 37;
-            this.button5.Text = "Закрыть форму";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -295,12 +293,16 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.ColumnHeadersVisible = false;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
-            this.dataGridView1.Location = new System.Drawing.Point(22, 213);
+            this.dataGridView1.Location = new System.Drawing.Point(23, 213);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -346,20 +348,103 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(801, 271);
+            this.button1.Location = new System.Drawing.Point(801, 260);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(130, 42);
+            this.button1.Size = new System.Drawing.Size(132, 42);
             this.button1.TabIndex = 44;
-            this.button1.Text = "Расчет рецептуры по близости";
+            this.button1.Text = "Подбор аналогов по близости";
             this.button1.UseCompatibleTextRendering = true;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // calculateButton
+            // 
+            this.calculateButton.Enabled = false;
+            this.calculateButton.Location = new System.Drawing.Point(801, 366);
+            this.calculateButton.Name = "calculateButton";
+            this.calculateButton.Size = new System.Drawing.Size(132, 42);
+            this.calculateButton.TabIndex = 45;
+            this.calculateButton.Text = "Расчет рецептуры ";
+            this.calculateButton.UseCompatibleTextRendering = true;
+            this.calculateButton.UseVisualStyleBackColor = true;
+            this.calculateButton.Click += new System.EventHandler(this.calculateButtonClick);
+            // 
+            // toggleSwitch1
+            // 
+            this.toggleSwitch1.Enabled = false;
+            this.toggleSwitch1.Location = new System.Drawing.Point(865, 177);
+            this.toggleSwitch1.Name = "toggleSwitch1";
+            // 
+            // 
+            // 
+            this.toggleSwitch1.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.toggleSwitch1.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.toggleSwitch1.Properties.Appearance.Options.UseBackColor = true;
+            this.toggleSwitch1.Properties.Appearance.Options.UseForeColor = true;
+            this.toggleSwitch1.Properties.OffText = "Off";
+            this.toggleSwitch1.Properties.OnText = "On";
+            this.toggleSwitch1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.toggleSwitch1.Size = new System.Drawing.Size(70, 24);
+            this.toggleSwitch1.TabIndex = 0;
+            this.toggleSwitch1.Toggled += new System.EventHandler(this.toggleSwitch1_Toggled);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(768, 159);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(154, 13);
+            this.label11.TabIndex = 46;
+            this.label11.Text = "Рецепт по массе/по объему ";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(24, 485);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(0, 13);
+            this.label12.TabIndex = 47;
+            // 
+            // button2
+            // 
+            this.button2.BackgroundImage = global::MarkOil.Properties.Resources.settings;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button2.Location = new System.Drawing.Point(801, 431);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(44, 42);
+            this.button2.TabIndex = 48;
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button5
+            // 
+            this.button5.BackgroundImage = global::MarkOil.Properties.Resources.log;
+            this.button5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button5.Location = new System.Drawing.Point(889, 430);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(44, 42);
+            this.button5.TabIndex = 37;
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(715, 30);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(0, 13);
+            this.label13.TabIndex = 49;
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(964, 509);
+            this.ClientSize = new System.Drawing.Size(964, 516);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.calculateButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -390,10 +475,13 @@
             this.Controls.Add(this.textBoxSUL);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.toggleSwitch1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form2";
             this.Text = "Подбор аналогов";
             ((System.ComponentModel.ISupportInitialize)(this.dbMarkDataSet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch1.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -433,5 +521,11 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button calculateButton;
+        private DevExpress.XtraEditors.ToggleSwitch toggleSwitch1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label13;
     }
 }

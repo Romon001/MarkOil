@@ -30,11 +30,11 @@ namespace MarkOil
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.asca = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.asca = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -53,10 +53,21 @@ namespace MarkOil
             this.dataGridView1.Size = new System.Drawing.Size(446, 132);
             this.dataGridView1.TabIndex = 0;
             // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.DecimalPlaces = 3;
+            this.numericUpDown1.Location = new System.Drawing.Point(88, 55);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(98, 20);
+            this.numericUpDown1.TabIndex = 1;
+            this.numericUpDown1.Visible = false;
+            // 
             // asca
             // 
             this.asca.HeaderText = "Column1";
             this.asca.Name = "asca";
+            this.asca.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.asca.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // Column1
             // 
@@ -72,15 +83,6 @@ namespace MarkOil
             // 
             this.Column3.HeaderText = "Column3";
             this.Column3.Name = "Column3";
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.DecimalPlaces = 3;
-            this.numericUpDown1.Location = new System.Drawing.Point(88, 55);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(98, 20);
-            this.numericUpDown1.TabIndex = 1;
-            this.numericUpDown1.Visible = false;
             // 
             // TEST
             // 
@@ -100,10 +102,10 @@ namespace MarkOil
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn asca;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn asca;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
