@@ -314,12 +314,21 @@ namespace MarkOil
             var solver = SolverContext.GetContext();
             solver.ClearModel();
             var model = solver.CreateModel();
+
             Term generalError = 0; //функция которую минимизируем 
-            Term errorSul = Convert.ToDouble(textBoxSUL.Text);
-            Term errorV350 = Convert.ToDouble(textBox350.Text);
-            Term errorPar = Convert.ToDouble(textBoxPAR.Text);
-            Term errorSPG = Convert.ToDouble(textBoxSPG.Text);
-            Term errorCST = Convert.ToDouble(textBoxCST.Text);
+
+            double sul_0 = Convert.ToDouble(textBoxSUL.Text);
+            double V350_0 = Convert.ToDouble(textBox350.Text);
+            double par_0 = Convert.ToDouble(textBoxPAR.Text);
+            double SPG_0 = Convert.ToDouble(textBoxSPG.Text);
+            double CST_0 = Convert.ToDouble(textBoxCST.Text);
+
+            Term mixSul= 0;
+            Term mixV350 = 0;
+            Term mixPar = 0;
+            Term mixSPG = 0;
+            Term mixCST = 0;
+
             Term generalConstraint = 0;// сумма рецепта = 1
             for (int i = 0; i < Convert.ToInt32(closenessAnalogs.Rows.Count); i++)
             {
@@ -327,28 +336,32 @@ namespace MarkOil
                 model.AddDecision(alpha);
                 model.AddConstraint($"constraintAlpha{i}", 0 <= alpha <= 1);
 
-                errorSul -= alpha * Convert.ToDouble(closenessAnalogs.Rows[i]["Сера"]);
-                errorV350 -= alpha * Convert.ToDouble(closenessAnalogs.Rows[i]["Выход 350С"]);
-                errorPar -= alpha * Convert.ToDouble(closenessAnalogs.Rows[i]["Парафины"]);
-                errorSPG -= alpha * Convert.ToDouble(closenessAnalogs.Rows[i]["Плотность"]);
-                errorCST -= alpha * Convert.ToDouble(closenessAnalogs.Rows[i]["Вязкость"]);
-                
+                mixSul += alpha * Convert.ToDouble(closenessAnalogs.Rows[i]["Сера"]);
+                mixV350 += alpha * Convert.ToDouble(closenessAnalogs.Rows[i]["Выход 350С"]);
+                mixPar += alpha * Convert.ToDouble(closenessAnalogs.Rows[i]["Парафины"]);
+                mixSPG += alpha / Convert.ToDouble(closenessAnalogs.Rows[i]["Плотность"]);
+                mixCST += alpha * Convert.ToDouble(closenessAnalogs.Rows[i]["Вязкость"])/
+                          Convert.ToDouble(closenessAnalogs.Rows[i]["Плотность"]);
                 generalConstraint += alpha;
-                
             }
+            mixSPG = 1 / mixSPG;
+            mixCST = mixCST * mixSPG;
 
             model.AddConstraint($"sumAlpha", generalConstraint==1);
 
-            generalError = Convert.ToDouble(textBox11.Text)*Model.Abs(errorSul) +
-                            Convert.ToDouble(textBox7.Text)*Model.Abs(errorV350) +
-                            Convert.ToDouble(textBox8.Text)*Model.Abs(errorPar) + 
-                            Convert.ToDouble(textBox9.Text)*Model.Abs(errorSPG) +
-                            Convert.ToDouble(textBox10.Text)*Model.Abs(errorCST);
+            //TODO: Проверка делителей на 0
+            generalError = Convert.ToDouble(textBox11.Text)*Model.Abs((mixSul-sul_0)/sul_0) +
+                            Convert.ToDouble(textBox7.Text)*Model.Abs((mixV350-V350_0)/ V350_0) +
+                            Convert.ToDouble(textBox8.Text)*Model.Abs((mixPar-par_0)/par_0) + 
+                            Convert.ToDouble(textBox9.Text)*Model.Abs((mixSPG-SPG_0)/SPG_0) +
+                            Convert.ToDouble(textBox10.Text)*Model.Abs((mixCST-CST_0)/CST_0);
             model.AddGoal("ComplicatedGoal", GoalKind.Minimize, generalError);
 
-            var solution = solver.Solve();
-            label13.Text = $"Целевая функция = {Math.Round(solution.Goals.First().ToDouble(),4)}";    
+            var solution = solver.Solve();  
             var solutions = solution.Decisions.ToList();
+            
+            label13.Text = $"Целевая функция = {Math.Round(solution.Goals.First().ToDouble(), 4)}";
+
             for (int i=0;i< solutions.Count();i++)
             {
                 closenessAnalogs.Rows[i]["Рецепт"] = solutions[i].ToDouble();
@@ -738,7 +751,7 @@ namespace MarkOil
                 }
                 else
                 {
-                    logMessage.Add($"{row["Название"]} {string.Join(",", closestAnalogsDictionary.Where(x => x.Value == row).Select(x => x.Key))}");
+                    logMessage.Add($"{row["Название"]} - {string.Join(",", closestAnalogsDictionary.Where(x => x.Value == row).Select(x => x.Key))}");
                 }
                     //TODO: клонировать нормально без буфера
 
