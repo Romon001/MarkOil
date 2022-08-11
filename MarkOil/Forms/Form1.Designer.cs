@@ -55,6 +55,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Property = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -234,6 +235,7 @@
             this.toolStripButton16.Name = "toolStripButton16";
             this.toolStripButton16.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton16.Text = "toolStripButton16";
+            this.toolStripButton16.Click += new System.EventHandler(this.toolStripButton16_Click);
             // 
             // toolStripButton17
             // 
@@ -300,23 +302,35 @@
             this.Value});
             this.dataGridView1.Location = new System.Drawing.Point(486, 28);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(297, 226);
             this.dataGridView1.TabIndex = 7;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Property
             // 
+            this.Property.FillWeight = 110F;
             this.Property.HeaderText = "Свойство";
             this.Property.Name = "Property";
             this.Property.ReadOnly = true;
-            this.Property.Width = 135;
+            this.Property.Width = 150;
             // 
             // Value
             // 
             this.Value.HeaderText = "Value";
             this.Value.Name = "Value";
             this.Value.ReadOnly = true;
-            this.Value.Width = 120;
+            this.Value.Width = 150;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(404, 314);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(82, 27);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "db to csv";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
@@ -324,6 +338,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(822, 342);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.treeView1);
@@ -367,6 +382,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Property;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
+        private System.Windows.Forms.Button button1;
     }
 }
 

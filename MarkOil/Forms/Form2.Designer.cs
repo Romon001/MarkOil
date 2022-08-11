@@ -67,9 +67,14 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.oilName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.density = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.yield = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dbMarkDataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -99,7 +104,7 @@
             this.textBoxSUL.Name = "textBoxSUL";
             this.textBoxSUL.Size = new System.Drawing.Size(100, 20);
             this.textBoxSUL.TabIndex = 2;
-            this.textBoxSUL.Text = "0";
+            this.textBoxSUL.Text = "1";
             this.textBoxSUL.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBoxCST
@@ -108,7 +113,7 @@
             this.textBoxCST.Name = "textBoxCST";
             this.textBoxCST.Size = new System.Drawing.Size(100, 20);
             this.textBoxCST.TabIndex = 13;
-            this.textBoxCST.Text = "0";
+            this.textBoxCST.Text = "1";
             this.textBoxCST.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBoxSPG
@@ -117,7 +122,7 @@
             this.textBoxSPG.Name = "textBoxSPG";
             this.textBoxSPG.Size = new System.Drawing.Size(100, 20);
             this.textBoxSPG.TabIndex = 14;
-            this.textBoxSPG.Text = "0";
+            this.textBoxSPG.Text = "1";
             this.textBoxSPG.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBoxPAR
@@ -126,7 +131,7 @@
             this.textBoxPAR.Name = "textBoxPAR";
             this.textBoxPAR.Size = new System.Drawing.Size(100, 20);
             this.textBoxPAR.TabIndex = 15;
-            this.textBoxPAR.Text = "0";
+            this.textBoxPAR.Text = "1";
             this.textBoxPAR.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBox350
@@ -135,7 +140,7 @@
             this.textBox350.Name = "textBox350";
             this.textBox350.Size = new System.Drawing.Size(100, 20);
             this.textBox350.TabIndex = 16;
-            this.textBox350.Text = "0";
+            this.textBox350.Text = "1";
             this.textBox350.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // textBox2
@@ -407,7 +412,6 @@
             // 
             // button2
             // 
-            this.button2.BackgroundImage = global::MarkOil.Properties.Resources.settings;
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button2.Location = new System.Drawing.Point(801, 431);
             this.button2.Name = "button2";
@@ -435,11 +439,40 @@
             this.label13.Size = new System.Drawing.Size(0, 13);
             this.label13.TabIndex = 49;
             // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.oilName,
+            this.density,
+            this.yield});
+            this.dataGridView2.Location = new System.Drawing.Point(23, 485);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(445, 181);
+            this.dataGridView2.TabIndex = 50;
+            this.dataGridView2.Visible = false;
+            // 
+            // oilName
+            // 
+            this.oilName.HeaderText = "Название";
+            this.oilName.Name = "oilName";
+            // 
+            // density
+            // 
+            this.density.HeaderText = "Плотность";
+            this.density.Name = "density";
+            // 
+            // yield
+            // 
+            this.yield.HeaderText = "Выход";
+            this.yield.Name = "yield";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(964, 516);
+            this.ClientSize = new System.Drawing.Size(964, 741);
+            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label12);
@@ -482,6 +515,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dbMarkDataSet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -527,5 +561,9 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn oilName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn density;
+        private System.Windows.Forms.DataGridViewTextBoxColumn yield;
     }
 }
